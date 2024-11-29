@@ -67,7 +67,7 @@
 // Push-buttons are active-low
 #define PB_PRESSED (0)
 
-#define Yled 0xa4
+#define YLED 0xa4
 
 /*******************************************************************************
  ***************************   GLOBAL VARIABLES   *******************************
@@ -86,7 +86,7 @@ void initGPIO (void)
 
   // Configure push button PB0 as a user input; will use as a toggle to indicate when inputs are ready
   //GPIO_PinModeSet(BSP_GPIO_PB0_PORT, BSP_GPIO_PB0_PIN, gpioModeInputPullFilter, 1);
-  pinMode(Yled, OUTPUT);
+  pinMode(YLED, OUTPUT);
   // Configure LED0 as output, will indicate when conversions are being performed
   //GPIO_PinModeSet(BSP_GPIO_LED0_PORT, BSP_GPIO_LED0_PIN, gpioModePushPull, 0);
 }
@@ -153,7 +153,7 @@ double IADCAverageConversion(uint32_t numSamples)
     IADC_Result_t sample;
 
     // indicate to user IADC is busy
-    digitalWrite(Yled, 1);
+    digitalWrite(YLED, 1);
     //GPIO_PinOutSet(BSP_GPIO_LED0_PORT, BSP_GPIO_LED0_PIN);
 
     // Averaging loop
@@ -174,7 +174,7 @@ double IADCAverageConversion(uint32_t numSamples)
     average /= NUM_SAMPLES;
 
     // turn off indicator LED
-    digitalWrite(Yled, 0);
+    digitalWrite(YLED, 0);
 
     return average;
 }
@@ -214,6 +214,9 @@ int main(void)
 
   initGPIO();
 
+  digitalWrite(YLED, 1);
+  digitalWrite(YLED, 0);
+  printf("Testing ADC\n\n");
   initIADC();
 
   // Set initial offset to maximum negative and initial gain to 1.0
@@ -300,6 +303,6 @@ int main(void)
     // Calculate input voltage:
     //  For differential inputs, the resultant range is from -Vref to +Vref, i.e.,
     //  for Vref = AVDD = 3.30V, 12 bits represents 6.60V full scale IADC range.
-    singleResult = ((int32_t) sample.data * 6.6) / 0xFFF;
+    singleResult = ((int32_t) sample.data * 15) / 0xFFF;
   }
 }
