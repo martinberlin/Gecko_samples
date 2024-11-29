@@ -303,6 +303,6 @@ int main(void)
     // Calculate input voltage:
     //  For differential inputs, the resultant range is from -Vref to +Vref, i.e.,
     //  for Vref = AVDD = 3.30V, 12 bits represents 6.60V full scale IADC range.
-    singleResult = ((int32_t) sample.data * 15) / 0xFFF;
+    singleResult = ((int32_t) sample.data * 6) ; // / 0xFFF
   }
 }
