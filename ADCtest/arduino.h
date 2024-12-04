@@ -30,6 +30,7 @@ enum {
 
 // Wrapper methods
 void delay(int i);
+void delayMicroseconds(int i);
 //
 // Digital pin functions use a numbering scheme to make it easier to map the
 // pin number to a port name and number
@@ -42,7 +43,8 @@ void digitalWrite(uint8_t u8Pin, uint8_t u8Value);
 
 // The Wire library is a C++ class; I've created a work-alike to my
 // BitBang_I2C API which is a set of C functions to simplify I2C
-void I2CInit(int iSpeed);
+int I2CReadRegister(uint8_t iAddr, uint8_t u8Register, uint8_t *pData, int iLen);
+void I2CInit(uint8_t u8SDA, uint8_t u8SCL, int iSpeed);
 void I2CWrite(uint8_t u8Addr, uint8_t *pData, int iLen);
 void I2CRead(uint8_t u8Addr, uint8_t *pData, int iLen);
 int I2CTest(uint8_t u8Addr);

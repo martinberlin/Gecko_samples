@@ -30,9 +30,12 @@ sdk: {id: simplicity_sdk, version: 2024.6.2}
 toolchain_settings: []
 component:
 - {id: EFM32PG22C200F512IM40}
+- {id: app_log}
 - {id: brd2503a}
 - {id: clock_manager}
 - {id: device_init}
+- instance: [usart]
+  id: iostream_usart
 - {id: power_manager}
 - instance: [btn0]
   id: simple_button

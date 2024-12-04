@@ -18,6 +18,8 @@
 #include "sl_system_init.h"
 #include "arduino.h"
 #include "app.h"
+ #include "sl_app_log.h"
+
 #if defined(SL_CATALOG_POWER_MANAGER_PRESENT)
 #include "sl_power_manager.h"
 #endif
@@ -213,8 +215,19 @@ int main(void)
   CHIP_Init();
 
   initGPIO();
+  // Turn on PCB sensors
+  digitalWrite(0xc6, 1);
+  // According to Gecko Kit DOC (uint8_t u8SDA, uint8_t u8SCL, int iSpeed);
+  I2CInit(0xd2, 0xd3, 5000);
+  //sl_app_log("i2c scanner: \n");
+  int addr_check = 0;
+  for (uint8_t i = 30; i < 127; i++)
+  {
+    addr_check =  I2CTest(i);
+    sl_app_log(i,addr_check);
+    digitalWrite(YLED, addr_check);
+  }
 
-  digitalWrite(YLED, 1);
   digitalWrite(YLED, 0);
   printf("Testing ADC\n\n");
   initIADC();
